@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using PayslipGenerator.Application.Interfaces;
 using PayslipGenerator.Domain.Models;
-using PayslipGenerator.Application.Services;
 
 namespace PayslipGenerator.Application
 {
