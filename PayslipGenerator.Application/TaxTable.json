@@ -1,0 +1,29 @@
+{
+    "TaxBrackets" : [
+        {
+            "LowerLimit":0,
+            "HigherLimit":20000,
+            "TaxRate":0
+        },
+        {
+            "LowerLimit":20000,
+            "HigherLimit":40000,
+            "TaxRate":0.1
+        },
+        {
+            "LowerLimit":40000,
+            "HigherLimit":80000,
+            "TaxRate":0.2
+        },
+        {
+            "LowerLimit":80000,
+            "HigherLimit":180000,
+            "TaxRate":0.3
+        },
+        {
+            "LowerLimit":180000,
+            "HigherLimit":0,
+            "TaxRate":0.4
+        }
+    ]
+}

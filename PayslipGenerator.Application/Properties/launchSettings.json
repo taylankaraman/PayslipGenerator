@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PayslipGenerator.Application": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Taylan Karaman\" 60000"
+    }
+  }
+}
