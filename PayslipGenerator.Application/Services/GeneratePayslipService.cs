@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection.Emit;
 using PayslipGenerator.Domain.Models;
 using PayslipGenerator.Application.Interfaces;
@@ -12,7 +13,9 @@ namespace PayslipGenerator.Application.Services
 
             decimal totalAnnualTax = 0m;
 
-            foreach (var taxBracket in taxTable.TaxBrackets)
+
+
+            foreach (var taxBracket in taxTable.TaxBrackets.OrderBy(o => o.LowerLimit))
             {
                 if (employee.AnnualSalary <= taxBracket.LowerLimit) continue;
 

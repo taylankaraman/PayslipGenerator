@@ -2,7 +2,7 @@
   "profiles": {
     "PayslipGenerator.Application": {
       "commandName": "Project",
-      "commandLineArgs": "\"Taylan Karaman\" 60000"
+      "commandLineArgs": "\"Mary Song\" 200000"
     }
   }
 }
