@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using PayslipGenerator.Domain.Models;
 using PayslipGenerator.Application.Interfaces;
 
@@ -13,15 +14,14 @@ namespace PayslipGenerator.Application.Services
 
             foreach (var taxBracket in taxTable.TaxBrackets)
             {
-                if (employee.AnnualSalary > taxBracket.LowerLimit)
-                {
-                    var taxableAmountInBracket = Math.Min(employee.AnnualSalary - taxBracket.LowerLimit, taxBracket.HigherLimit - taxBracket.LowerLimit);
-                    var taxInBracket = taxableAmountInBracket * taxBracket.TaxRate;
-                    totalAnnualTax += taxInBracket;
-                }
+                if (employee.AnnualSalary <= taxBracket.LowerLimit) continue;
+
+                var taxableAmountInBracket = Math.Min(employee.AnnualSalary - taxBracket.LowerLimit, taxBracket.HigherLimit - taxBracket.LowerLimit);
+                var taxInBracket = taxableAmountInBracket * taxBracket.TaxRate;
+                totalAnnualTax += taxInBracket;
             }
 
-            Payslip payslip = new Payslip
+            var payslip = new Payslip
             {
                 Name = employee.Name,
                 GrossMonthlyIncome = employee.AnnualSalary / 12,

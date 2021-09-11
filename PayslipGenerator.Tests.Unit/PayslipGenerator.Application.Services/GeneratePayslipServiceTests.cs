@@ -44,7 +44,7 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 
             var taxBracket5 = Fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 180000)
-                .With(t => t.HigherLimit, 0)
+                .With(t => t.HigherLimit, decimal.MaxValue)
                 .With(t => t.TaxRate, 0.4m)
                 .Create();
 

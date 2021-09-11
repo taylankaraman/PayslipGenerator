@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using PayslipGenerator.Application.Interfaces;
 using PayslipGenerator.Domain.Models;
@@ -19,8 +18,7 @@ namespace PayslipGenerator.Application
 
             string[] arguments = Environment.GetCommandLineArgs();
 
-            var taxTableJson = loadTaxTableService.ReadTaxTable();
-            TaxTable taxTable = JsonConvert.DeserializeObject<TaxTable>(taxTableJson);
+            var taxTable = loadTaxTableService.ReadTaxTable();
 
             Employee employee = new Employee
             {

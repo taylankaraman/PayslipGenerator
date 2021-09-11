@@ -1,7 +1,9 @@
-﻿namespace PayslipGenerator.Application.Interfaces
+﻿using PayslipGenerator.Domain.Models;
+
+namespace PayslipGenerator.Application.Interfaces
 {
     public interface ILoadTaxTableService
     {
-        public string ReadTaxTable();
+        public TaxTable ReadTaxTable();
     }
 }
