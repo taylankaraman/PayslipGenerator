@@ -7,6 +7,8 @@ namespace PayslipGenerator.Application
 {
     class Program
     {
+        
+
         static void Main(string[] args)
         {
             var services = Startup.RegisterServices();
@@ -16,14 +18,26 @@ namespace PayslipGenerator.Application
             var displayPayslipService = serviceProvider.GetRequiredService<IDisplayPayslipService>();
             var loadTaxTableService = serviceProvider.GetRequiredService<ILoadTaxTableService>();
 
-            string[] arguments = Environment.GetCommandLineArgs();
+            var arguments = Environment.GetCommandLineArgs();
+
+            if (args.Length < 2)
+            {
+                throw new ArgumentException("Must have two command line arguments");
+            }
+
+            var nameArg = arguments[1];
+            if (!decimal.TryParse(arguments[2], out var grossAnnualSalaryArg))
+            {
+                throw new ArgumentException("Invalid input value for salary");
+            }
+
 
             var taxTable = loadTaxTableService.ReadTaxTable();
 
-            Employee employee = new Employee
+            var employee = new Employee
             {
-                Name = arguments[1],
-                AnnualSalary = Convert.ToDecimal(arguments[2])
+                Name = nameArg,
+                AnnualSalary = grossAnnualSalaryArg
             };
 
             var payslip = generatePayslipService.CreatePayslip(employee, taxTable);
