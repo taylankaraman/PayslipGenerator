@@ -20,10 +20,10 @@
             "HigherLimit":180000,
             "TaxRate":0.3
         },
-        {
-            "LowerLimit":180000,
-            "HigherLimit":0,
-            "TaxRate":0.4
-        }
+      {
+        "LowerLimit": 180000,
+        "HigherLimit": 79228162514264337593543950335,
+        "TaxRate": 0.4
+      }
     ]
 }

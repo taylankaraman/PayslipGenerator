@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using AutoFixture;
 using NUnit.Framework;
 using PayslipGenerator.Application.Services;
@@ -10,7 +8,6 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 {
     public class GeneratePayslipServiceTests : BaseTests
     {
-        private const decimal GrossAnnualSalary = 60000m;
         private TaxTable _taxTable;
 
         [SetUp]
@@ -63,16 +60,21 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 
         }
 
-        [Test]
-        public void GivenGrossAnnualSalaryReturnsNetMonthlySalary()
+        [TestCase(20000, 0, 1666.67)]
+        [TestCase(35000, 125, 2791.67)]
+        [TestCase(40000, 166.67, 3166.67)]
+        [TestCase(60000, 500, 4500)]
+        [TestCase(80000, 833.33, 5833.33)]
+        [TestCase(120000, 1833.33, 8166.67)]
+        [TestCase(200000, 4000, 12666.67)]
+        public void GivenGrossAnnualSalaryReturnsNetMonthlySalary(decimal grossAnnualSalary, decimal monthlyIncomeTax, decimal netMonthlyIncome)
         {
             // Arrange
             var generatePayslipService = new GeneratePayslipService();
             var employee = Fixture.Build<Employee>()
                 .With(e => e.Name, "Mary Song")
-                .With(e => e.AnnualSalary, 60000m)
+                .With(e => e.AnnualSalary, grossAnnualSalary)
                 .Create();
-
 
 
             // Act
@@ -81,8 +83,8 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
             // Assert
             Assert.AreEqual(payslip.Name, employee.Name);
             Assert.AreEqual(payslip.GrossMonthlyIncome, employee.AnnualSalary / 12);
-            Assert.AreEqual(payslip.MonthlyIncomeTax, 500);
-            Assert.AreEqual(payslip.NetMonthlyIncome, 4500);
+            Assert.That(payslip.MonthlyIncomeTax, Is.EqualTo(monthlyIncomeTax).Within(.01));
+            Assert.That(payslip.NetMonthlyIncome, Is.EqualTo(netMonthlyIncome).Within(.01));
         }
     }
 }
