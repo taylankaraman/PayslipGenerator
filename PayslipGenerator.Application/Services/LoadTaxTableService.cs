@@ -1,21 +1,22 @@
-﻿using System.IO;
-using System.Reflection;
-using Newtonsoft.Json;
+﻿using System.Linq;
 using PayslipGenerator.Application.Interfaces;
 using PayslipGenerator.Domain.Models;
+using PayslipGenerator.Persistence;
 
 namespace PayslipGenerator.Application.Services
 {
     public class LoadTaxTableService : ILoadTaxTableService
     {
+        private readonly PayslipGeneratorContext _context;
+
+        public LoadTaxTableService(PayslipGeneratorContext context)
+        {
+            _context = context;
+        }
+
         public TaxTable ReadTaxTable()
         {
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TaxTable.json");
-            using var r = new StreamReader(path);
-            var taxTableJson = r.ReadToEnd();
-
-            var taxTable = JsonConvert.DeserializeObject<TaxTable>(taxTableJson);
-
+            var taxTable = _context.TaxTables.FirstOrDefault(tt => tt.TableName == "TaxTable1");
             return taxTable;
 ;        }
     }

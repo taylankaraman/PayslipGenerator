@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="TaxTable.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
@@ -23,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PayslipGenerator.Domain\PayslipGenerator.Domain.csproj" />
+    <ProjectReference Include="..\PayslipGenerator.Persistence\PayslipGenerator.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

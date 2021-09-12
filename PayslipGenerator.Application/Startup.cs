@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PayslipGenerator.Application.Interfaces;
 using PayslipGenerator.Application.Services;
+using PayslipGenerator.Persistence;
 
 namespace PayslipGenerator.Application
 {
@@ -13,6 +14,7 @@ namespace PayslipGenerator.Application
             serviceCollection.AddSingleton<IGeneratePayslipService, GeneratePayslipService>();
             serviceCollection.AddSingleton<IDisplayPayslipService, DisplayPayslipService>();
             serviceCollection.AddSingleton<ILoadTaxTableService, LoadTaxTableService>();
+            serviceCollection.AddPersistence();
 
             return serviceCollection;
         }
