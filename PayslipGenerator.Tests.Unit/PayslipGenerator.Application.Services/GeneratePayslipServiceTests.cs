@@ -6,40 +6,41 @@ using PayslipGenerator.Domain.Models;
 
 namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 {
-    public class GeneratePayslipServiceTests : BaseTests
+    public class GeneratePayslipServiceTests
     {
         private TaxTable _taxTable;
+        private Fixture _fixture;
 
         [SetUp]
         public void Setup()
         {
-            Fixture = new Fixture();
+            _fixture = new Fixture();
 
-            var taxBracket1 = Fixture.Build<TaxBracket>()
+            var taxBracket1 = _fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 0)
                 .With(t => t.HigherLimit, 20000)
                 .With(t => t.TaxRate, 0)
                 .Create();
 
-            var taxBracket2 = Fixture.Build<TaxBracket>()
+            var taxBracket2 = _fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 20000)
                 .With(t => t.HigherLimit, 40000)
                 .With(t => t.TaxRate, 0.1m)
                 .Create();
 
-            var taxBracket3 = Fixture.Build<TaxBracket>()
+            var taxBracket3 = _fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 40000)
                 .With(t => t.HigherLimit, 80000)
                 .With(t => t.TaxRate, 0.2m)
                 .Create();
 
-            var taxBracket4 = Fixture.Build<TaxBracket>()
+            var taxBracket4 = _fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 80000)
                 .With(t => t.HigherLimit, 180000)
                 .With(t => t.TaxRate, 0.3m)
                 .Create();
 
-            var taxBracket5 = Fixture.Build<TaxBracket>()
+            var taxBracket5 = _fixture.Build<TaxBracket>()
                 .With(t => t.LowerLimit, 180000)
                 .With(t => t.HigherLimit, decimal.MaxValue)
                 .With(t => t.TaxRate, 0.4m)
@@ -54,7 +55,7 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
                 taxBracket5
             };
 
-            _taxTable = Fixture.Build<TaxTable>()
+            _taxTable = _fixture.Build<TaxTable>()
                 .With(tt => tt.TaxBrackets,taxBrackets)
                 .Create();
 
@@ -71,7 +72,7 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
         {
             // Arrange
             var generatePayslipService = new GeneratePayslipService();
-            var employee = Fixture.Build<Employee>()
+            var employee = _fixture.Build<Employee>()
                 .With(e => e.Name, "Mary Song")
                 .With(e => e.AnnualSalary, grossAnnualSalary)
                 .Create();

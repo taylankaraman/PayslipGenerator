@@ -3,7 +3,7 @@
 -.net core 3.1 console application. Didn't want to use .net 5.0 since .net 3.1 is more stable and has until 2023
  to upgrade to, by that time .net 6.0 which would be more stable.
 
--If you debug the parameters are already defined in the application project properties as "Mary Song" 60000.
+-If you debug, the parameters are already defined in the application project properties as "Mary Song" 60000.
 
 -Uses EF Core InMemoryDatabase. Tax Table and related tax brackets are populated during app startup and retrieved
  at LoadTaxTableService.
