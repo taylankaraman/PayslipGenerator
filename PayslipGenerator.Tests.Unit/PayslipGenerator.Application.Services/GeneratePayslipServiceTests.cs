@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoFixture;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PayslipGenerator.Application.Services;
 using PayslipGenerator.Domain.Models;
+using PayslipGenerator.Persistence;
+using PayslipGenerator.Persistence.Repositories;
 
 namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 {
@@ -56,6 +60,7 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
             };
 
             _taxTable = _fixture.Build<TaxTable>()
+                .With(tt => tt.TaxTableName, "TaxTable1")
                 .With(tt => tt.TaxBrackets,taxBrackets)
                 .Create();
 
@@ -71,7 +76,14 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
         public void GivenGrossAnnualSalaryReturnsNetMonthlySalary(decimal grossAnnualSalary, decimal monthlyIncomeTax, decimal netMonthlyIncome)
         {
             // Arrange
-            var generatePayslipService = new GeneratePayslipService();
+            var context = new PayslipGeneratorContext(new DbContextOptionsBuilder<PayslipGeneratorContext>()
+                .UseInMemoryDatabase("TestPayslipDb" + Guid.NewGuid()).Options);
+
+            Bootstrap.AddData(context);
+
+            var repo = new PayslipGeneratorRepository(context);
+            
+            var generatePayslipService = new GeneratePayslipService(repo);
             var employee = _fixture.Build<Employee>()
                 .With(e => e.Name, "Mary Song")
                 .With(e => e.AnnualSalary, grossAnnualSalary)
@@ -79,7 +91,7 @@ namespace PayslipGenerator.Tests.Unit.PayslipGenerator.Application.Services
 
 
             // Act
-            var payslip = generatePayslipService.CreatePayslip(employee, _taxTable);
+            var payslip = generatePayslipService.CreatePayslip(employee, _taxTable.TaxTableName);
 
             // Assert
             Assert.AreEqual(payslip.Name, employee.Name);

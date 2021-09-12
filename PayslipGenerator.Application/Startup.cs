@@ -13,7 +13,6 @@ namespace PayslipGenerator.Application
 
             serviceCollection.AddSingleton<IGeneratePayslipService, GeneratePayslipService>();
             serviceCollection.AddSingleton<IDisplayPayslipService, DisplayPayslipService>();
-            serviceCollection.AddSingleton<ILoadTaxTableService, LoadTaxTableService>();
             serviceCollection.AddPersistence();
 
             return serviceCollection;

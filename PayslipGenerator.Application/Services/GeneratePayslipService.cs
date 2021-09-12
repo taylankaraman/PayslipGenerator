@@ -2,13 +2,22 @@
 using System.Linq;
 using PayslipGenerator.Domain.Models;
 using PayslipGenerator.Application.Interfaces;
+using PayslipGenerator.Persistence.Interfaces;
 
 namespace PayslipGenerator.Application.Services
 {
     public class GeneratePayslipService : IGeneratePayslipService
     {
-        public Payslip CreatePayslip(Employee employee, TaxTable taxTable)
+        private IPayslipGeneratorRepository _repo;
+
+        public GeneratePayslipService(IPayslipGeneratorRepository repo)
         {
+            _repo = repo;
+        }
+
+        public Payslip CreatePayslip(Employee employee, string taxTableName)
+        {
+            var taxTable = _repo.GetTaxTableByName(taxTableName);
 
             decimal totalAnnualTax = 0m;
 

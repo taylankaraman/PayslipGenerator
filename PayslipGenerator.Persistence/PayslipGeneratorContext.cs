@@ -12,7 +12,7 @@ namespace PayslipGenerator.Persistence
         {
             modelBuilder.Entity<TaxBracket>()
                 .HasKey(tb => tb.Id);
-
+            
             modelBuilder.Entity<TaxTable>()
                 .HasKey(tt => tt.Id);
         }

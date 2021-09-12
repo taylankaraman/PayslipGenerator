@@ -4,6 +4,6 @@ namespace PayslipGenerator.Application.Interfaces
 {
     public interface IGeneratePayslipService
     {
-        public Payslip CreatePayslip(Employee employee, TaxTable taxTable);
+        public Payslip CreatePayslip(Employee employee, string taxTableName);
     }
 }
